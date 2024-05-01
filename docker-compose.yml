@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+
+  db:
+    image: mongo:4.0-xenial
+    ports:
+      - 27017:27017
+    volumes:
+      - baseDB:/data/db
+  
+  backend:
+    build: ./backend
+    ports:
+      - 9000:9000
+    environment:
+      MONGO_URI: mongodb://db/baseDB
+  
+  frontend:
+    build: ./frontend
+    ports:
+      - 3000:3000
+
+
+volumes:
+  baseDB:
